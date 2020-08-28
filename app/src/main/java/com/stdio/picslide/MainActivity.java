@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String section = "latest";
     ImageView imageView;
+    TextView tvDescription;
     int pageNumber = 0;
 
     @Override
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageView = findViewById(R.id.imageView);
+        tvDescription = findViewById(R.id.tvDescription);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         requestData();
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                                     .apply(new RequestOptions()
                                             .placeholder(R.drawable.progress_animation))
                                     .into(imageView);
+                            tvDescription.setText(gifObj.getString("description"));
                         } catch (JSONException e) {
                             System.out.println(e.getMessage());
                         }
