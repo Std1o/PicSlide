@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private String section = "latest";
     ImageView imageView;
     TextView tvDescription;
-    int pageNumber = 0;
+    private int [] pageNumbers = {0, 0,0 };
+    private int currentIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabNext:
-                pageNumber++;
+                pageNumbers[currentIndex]++;
                 requestData();
                 break;
         }
@@ -61,22 +62,29 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    currentIndex = 0;
+                    section = "latest";
                     Toast.makeText(MainActivity.this, "Последние", Toast.LENGTH_SHORT).show();
-                    return true;
+                    break;
                 case R.id.navigation_dashboard:
+                    currentIndex = 1;
+                    section = "top";
                     Toast.makeText(MainActivity.this, "Лучшие", Toast.LENGTH_SHORT).show();
-                    return true;
+                    break;
                 case  R.id.navigation_notifications:
+                    currentIndex = 2;
+                    section = "hot";
                     Toast.makeText(MainActivity.this, "Горячие", Toast.LENGTH_SHORT).show();
-                    return true;
+                    break;
             }
-            return false;
+            requestData();
+            return true;
         }
     };
 
     private void requestData() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://developerslife.ru/" + section + "/" + pageNumber+ "?json=true";
+        String url = "https://developerslife.ru/" + section + "/" + pageNumbers[currentIndex] + "?json=true";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
