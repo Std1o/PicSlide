@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 pageNumbers[currentIndex]++;
                 requestData();
                 break;
+            case R.id.fabBack:
+                if (pageNumbers[currentIndex] > 0) {
+                    pageNumbers[currentIndex]--;
+                    requestData();
+                }
+                break;
         }
     }
 
