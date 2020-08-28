@@ -1,9 +1,12 @@
 package com.stdio.picslide;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,9 +20,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Toast.makeText(MainActivity.this, "Последние", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.navigation_dashboard:
+                    Toast.makeText(MainActivity.this, "Лучшие", Toast.LENGTH_SHORT).show();
+                    return true;
+                case  R.id.navigation_notifications:
+                    Toast.makeText(MainActivity.this, "Горячие", Toast.LENGTH_SHORT).show();
+                    return true;
+            }
+            return false;
+        }
+    };
 
 }
