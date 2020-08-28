@@ -2,6 +2,7 @@ package com.stdio.picslide;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String section = "latest";
     ImageView imageView;
+    int pageNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         requestData();
+    }
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fabNext:
+                pageNumber++;
+                requestData();
+                break;
+        }
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -62,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestData() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://developerslife.ru/" + section + "/0?json=true";
+        String url = "https://developerslife.ru/" + section + "/" + pageNumber+ "?json=true";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

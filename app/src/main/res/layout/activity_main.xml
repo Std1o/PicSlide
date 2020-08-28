@@ -6,12 +6,14 @@
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="2dp"
+        android:backgroundTint="@android:color/black"
         android:layout_marginTop="30dp">
 
         <ImageView
@@ -19,6 +21,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/cv"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@android:color/white"
+            android:clickable="true"
+            android:layout_toLeftOf="@+id/space"
+            android:layout_marginTop="2dp"
+            app:srcCompat="@drawable/ic_back" />
+
+        <Space
+            android:id="@+id/space"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@android:color/white"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:layout_toRightOf="@id/space"
+            android:layout_marginTop="2dp"
+            app:srcCompat="@drawable/ic_next" />
+    </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
