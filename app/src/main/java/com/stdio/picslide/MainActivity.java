@@ -2,6 +2,7 @@ package com.stdio.picslide;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -10,6 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -25,11 +28,13 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
 
     private String section = "latest";
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        imageView = findViewById(R.id.imageView);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         requestData();
@@ -67,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
                             obj = new JSONObject(response);
                             JSONObject gifObj = obj.getJSONArray("result").getJSONObject(0);
                             System.out.println(gifObj.getString("gifURL"));
+                            Glide.with(MainActivity.this) //Takes the context
+                                    .asGif()
+                                    .load(gifObj.getString("gifURL"))
+                                    .apply(new RequestOptions()
+                                            .placeholder(R.drawable.progress_animation))
+                                    .into(imageView);
                         } catch (JSONException e) {
                             System.out.println(e.getMessage());
                         }
