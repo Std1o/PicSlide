@@ -1,5 +1,7 @@
 package com.stdio.picslide;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        Toast.makeText(this, String.valueOf(isNetworkConnected()), Toast.LENGTH_SHORT).show();
         requestData();
     }
 
@@ -118,5 +121,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         queue.add(stringRequest);
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }
