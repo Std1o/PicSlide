@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private String section = "latest";
     ImageView imageView;
     TextView tvDescription;
+    RelativeLayout mainContent;
+    LinearLayout offlineContent;
     private int [] pageNumbers = {0, 0,0 };
     private int currentIndex = 0;
 
@@ -41,12 +45,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = findViewById(R.id.imageView);
-        tvDescription = findViewById(R.id.tvDescription);
+        initViews();
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Toast.makeText(this, String.valueOf(isNetworkConnected()), Toast.LENGTH_SHORT).show();
-        requestData();
+        if (!isNetworkConnected()) {
+            mainContent.setVisibility(View.GONE);
+            offlineContent.setVisibility(View.VISIBLE);
+        }
+        else {
+            requestData();
+        }
+    }
+
+    private void initViews() {
+        imageView = findViewById(R.id.imageView);
+        tvDescription = findViewById(R.id.tvDescription);
+        mainContent = findViewById(R.id.mainContent);
+        offlineContent = findViewById(R.id.offlineContent);
     }
 
     public void onClick(View v) {
@@ -58,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.fabBack:
                 if (pageNumbers[currentIndex] > 0) {
                     pageNumbers[currentIndex]--;
+                    requestData();
+                }
+                break;
+            case R.id.btnTryAgain:
+                if (isNetworkConnected()) {
+                    mainContent.setVisibility(View.VISIBLE);
+                    offlineContent.setVisibility(View.GONE);
                     requestData();
                 }
                 break;
