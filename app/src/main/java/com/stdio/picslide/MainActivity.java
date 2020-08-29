@@ -137,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("response " + error.getMessage());
+                if (!isNetworkConnected()) {
+                    mainContent.setVisibility(View.GONE);
+                    offlineContent.setVisibility(View.VISIBLE);
+                }
             }
         });
         queue.add(stringRequest);
