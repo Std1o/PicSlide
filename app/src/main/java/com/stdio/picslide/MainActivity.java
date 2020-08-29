@@ -95,17 +95,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     currentIndex = 0;
                     section = "latest";
-                    Toast.makeText(MainActivity.this, "Последние", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.navigation_dashboard:
                     currentIndex = 1;
                     section = "top";
-                    Toast.makeText(MainActivity.this, "Лучшие", Toast.LENGTH_SHORT).show();
                     break;
                 case  R.id.navigation_notifications:
                     currentIndex = 2;
                     section = "hot";
-                    Toast.makeText(MainActivity.this, "Горячие", Toast.LENGTH_SHORT).show();
                     break;
             }
             requestData();
